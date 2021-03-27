@@ -40,7 +40,7 @@ CDTCallFrame >> gtSourceCodeFor: aView [
 		stencil: [ | editor |
 			editor := BrEditor new
 				text: self sourceText;
-				look: BrGlamorousCodeEditorLook new;
+				aptitude: BrGlamorousCodeEditorAptitude new;
 				styler: JSParser gtStyler.
 			self lineNumber > 5 ifTrue:
 				[ editor 	scrollToPosition: self lineNumber - 5 ].
