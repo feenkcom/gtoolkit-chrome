@@ -41,7 +41,7 @@ CDTDebugger >> gtSourceCodeFor: aView [
 		stencil: [
 			CDTDebuggerEditor new
 				debugger: self;
-				look: BrGlamorousCodeEditorLook new;
+				aptitude: BrGlamorousCodeEditorAptitude new;
 				styler: JSParser gtStyler;
 				yourself ].
 
