@@ -1,1 +1,1 @@
-Package { #name : 'BaselineOfGt4ChromeDevTools' }
+Package { #name : #BaselineOfGt4ChromeDevTools }

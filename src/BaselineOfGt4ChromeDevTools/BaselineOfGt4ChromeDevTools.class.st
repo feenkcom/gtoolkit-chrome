@@ -1,16 +1,16 @@
 Class {
-	#name : 'BaselineOfGt4ChromeDevTools',
-	#superclass : 'BaselineOf',
-	#category : 'BaselineOfGt4ChromeDevTools'
+	#name : #BaselineOfGt4ChromeDevTools,
+	#superclass : #BaselineOf,
+	#category : #BaselineOfGt4ChromeDevTools
 }
 
-{ #category : 'baseline' }
+{ #category : #baseline }
 BaselineOfGt4ChromeDevTools >> baseline: spec [
 	<baseline>
 	spec for: #'common' do: [
 		spec
 			baseline: 'Chrome' with: [
-				spec repository: 'github://feenkcom/Pharo-Chrome:v0.5.133/repository' ].
+				spec repository: 'github://feenkcom/Pharo-Chrome:v0.5.134/repository' ].
 
 		spec package: 'Gt4ChromeDevTools' with: [
 			spec requires: #('Chrome') ].
