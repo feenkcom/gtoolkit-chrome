@@ -55,6 +55,53 @@ ChromeTabPage >> gtMessageQueueFor: aView [
 		  title: 'Message Queue';
 		  priority: 39;
 		  items: [ messageQueue copy ];
+		  actionDropdownButtonIcon: BrGlamorousVectorIcons down
+		  label: 'Note'
+		  tooltip: 'Extract and remove message events with a note'
+		  content: [ :aButton :aTab | 
+			  | anEditor |
+			  BrVerticalPane new
+				  alignCenterLeft;
+				  width: 300;
+				  vFitContent;
+				  padding: (BlInsets all: 10);
+				  addChild: (anEditor := BrEditor new
+						               aptitude: BrGlamorousRegularEditorAptitude;
+						               border:
+							               (BlBorder
+								                paint:
+									                BrGlamorousColors disabledButtonTextColor
+								                width: 1);
+						               margin: (BlInsets bottom: 10);
+						               hMatchParent;
+						               vFitContent);
+				  addChild: (BrToolbar new
+						   fitContent;
+						   aptitude: BrGlamorousToolbarAptitude;
+						   addItem: (BrButton new
+								    aptitude: BrGlamorousButtonWithIconAptitude;
+								    icon: BrGlamorousVectorIcons accept;
+								    label: 'Make a note';
+								    action: [ :anAcceptButton | 
+									    | aCopy aNode |
+									    aCopy := messageQueue copy.
+									    aNode := self getDocument.
+									    self getMissingChildren.
+
+									    ChromeMessageQueueNotes default
+										    addTitle: anEditor text asString
+										    node: aNode
+										    messages: aCopy.
+
+									    messageQueue removeAll.
+									    aTab viewContentElement phlow update ]);
+						   addItem: (BrButton new
+								    aptitude: BrGlamorousButtonWithIconAptitude;
+								    icon: BrGlamorousVectorIcons inspect;
+								    label: 'Inspect notes';
+								    action: [ :anInspectButton | 
+									    aButton phlow spawnObject:
+											    ChromeMessageQueueNotes default ])) ];
 		  actionUpdateButton;
 		  actionButtonIcon: BrGlamorousIcons trash
 		  tooltip: 'Clear Message Queue'
@@ -87,4 +134,17 @@ ChromeTabPage >> gtRootNodeFor: aView [
 		  expandUpTo: 2;
 		  updateWhen: ChromePageDOMDocumentUpdated
 		  in: [ self pageEventListener ] 
+]
+
+{ #category : #'*Gt4ChromeDevTools' }
+ChromeTabPage >> pageEventListener [
+
+	<return: #ChromePageEventsProcessor>
+	^ messageProcessorMutex critical: [ 
+		  messageProcessors
+			  detect: [ :each | each class = ChromePageEventsProcessor ]
+			  ifFound: [ :aMessageProcessor | aMessageProcessor ]
+			  ifNone: [ 
+				  self addMessageProcessor:
+					  (ChromePageEventsProcessor new page: self) ] ]
 ]
