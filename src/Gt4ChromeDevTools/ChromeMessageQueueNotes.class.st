@@ -52,7 +52,24 @@ ChromeMessageQueueNotes >> gtNotesFor: aView [
 		  items: [ self notes copy ];
 		  column: 'Title' text: #title weight: 3;
 		  column: 'Number of Messages'
-		  text: [ :aNote | aNote messages size ]
+		  text: [ :aNote | aNote messages size ];
+		  column: 'Actions' stencil: [ :anItem | 
+			  BrButton new
+				  fitContent;
+				  beTinySize;
+				  aptitude: BrGlamorousButtonWithIconAptitude;
+				  icon: BrGlamorousIcons minimize;
+				  label: 'Remove note';
+				  action: [ :theButton | 
+					  self notes remove: anItem ifAbsent: [ "ignore" ].
+					  theButton phlow firstParentWithView phlow update ] ]
+		  width: 60;
+		  actionUpdateButton;
+		  actionButtonIcon: BrGlamorousIcons trash
+		  tooltip: 'Clear Message Queue'
+		  action: [ :aButton :aTab | 
+			  self notes removeAll.
+			  aTab viewContentElement phlow update ]
 ]
 
 { #category : #accessing }
