@@ -1,6 +1,21 @@
 Extension { #name : #ChromeTabPage }
 
 { #category : #'*Gt4ChromeDevTools' }
+ChromeTabPage >> captureScreenshotBase64 [
+	"Capture a screenshot of the current page at full resolution"
+	| json layout message |
+
+	layout := self getLayoutMetrics.
+	message := ChromePageMessageFactory new 
+		captureScreenshotX: 0 y: 0 
+		width: ((layout at: 'contentSize') at: 'width')
+		height: ((layout at: 'contentSize') at: 'height')
+		scale: 1.0.
+	json := self sendMessage: message.
+	^ (json at: 'result') at: 'data'.
+]
+
+{ #category : #'*Gt4ChromeDevTools' }
 ChromeTabPage >> gtGetMissingChildrenFor: anAction [
 
 	<gtAction>
@@ -83,15 +98,17 @@ ChromeTabPage >> gtMessageQueueFor: aView [
 								    icon: BrGlamorousVectorIcons accept;
 								    label: 'Make a note';
 								    action: [ :anAcceptButton | 
-									    | aCopy aNode |
+									    | aCopy aNode aScreenshot |
 									    aCopy := messageQueue copy.
 									    aNode := self getDocument.
 									    self getMissingChildren.
+									    aScreenshot := self captureScreenshotBase64.
 
 									    ChromeMessageQueueNotes default
 										    addTitle: anEditor text asString
 										    node: aNode
-										    messages: aCopy.
+										    messages: aCopy
+										    screenshot: aScreenshot.
 
 									    messageQueue removeAll.
 									    aTab viewContentElement phlow update ]);

@@ -1,13 +1,22 @@
 Class {
 	#name : #ChromeMessageQueueNote,
 	#superclass : #Object,
+	#traits : 'TGtOptions',
+	#classTraits : 'TGtOptions classTrait',
 	#instVars : [
 		'title',
 		'messages',
-		'node'
+		'node',
+		'screenshot'
 	],
 	#category : #'Gt4ChromeDevTools-Notes'
 }
+
+{ #category : #accessing }
+ChromeMessageQueueNote class >> stonAllInstVarNames [
+
+	^ super stonAllInstVarNames copyWithout: #options
+]
 
 { #category : #printing }
 ChromeMessageQueueNote >> gtDisplayOn: aStream [
@@ -47,6 +56,18 @@ ChromeMessageQueueNote >> gtRootNodeFor: aView [
 ]
 
 { #category : #accessing }
+ChromeMessageQueueNote >> gtScreenshotFor: aView [
+
+	<gtView>
+	self screenshot ifNil: [ ^ aView empty ].
+
+	^ aView explicit
+		  title: 'Screenshot';
+		  priority: 10;
+		  stencil: [ self screenshotForm asElement asScalableElement ]
+]
+
+{ #category : #accessing }
 ChromeMessageQueueNote >> messages [
 
 	^ messages
@@ -81,6 +102,27 @@ ChromeMessageQueueNote >> printOn: aStream [
 		nextPut: $(;
 		nextPutAll: self title asString;
 		nextPut: $)
+]
+
+{ #category : #accessing }
+ChromeMessageQueueNote >> screenshot [
+
+	^ screenshot
+]
+
+{ #category : #accessing }
+ChromeMessageQueueNote >> screenshot: anObject [
+
+	screenshot := anObject
+]
+
+{ #category : #accessing }
+ChromeMessageQueueNote >> screenshotForm [
+
+	^ self
+		  optionAt: #screenshotForm
+		  ifAbsentPut: [ 
+		  Form fromBinaryStream: self screenshot base64Decoded readStream ]
 ]
 
 { #category : #accessing }

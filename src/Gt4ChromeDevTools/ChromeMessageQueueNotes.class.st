@@ -29,13 +29,14 @@ ChromeMessageQueueNotes >> addNote: aNote [
 ]
 
 { #category : #adding }
-ChromeMessageQueueNotes >> addTitle: aTitle node: aNode messages: aCollection [
+ChromeMessageQueueNotes >> addTitle: aTitle node: aNode messages: aCollection screenshot: aBase64 [
 
 	| aNote |
 	aNote := ChromeMessageQueueNote new
 		         title: aTitle;
 		         node: aNode;
-		         messages: aCollection.
+		         messages: aCollection;
+		         screenshot: aBase64.
 
 	self addNote: aNote
 ]
