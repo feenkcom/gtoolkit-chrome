@@ -131,9 +131,7 @@ ChromeTabPage >> gtRootNodeFor: aView [
 		  children: #children;
 		  actionUpdateButton;
 		  column: 'Name' text: #gtChildrenViewText;
-		  expandUpTo: 2;
-		  updateWhen: ChromePageDOMDocumentUpdated
-		  in: [ self pageEventListener ] 
+		  expandUpTo: 2
 ]
 
 { #category : #'*Gt4ChromeDevTools' }
