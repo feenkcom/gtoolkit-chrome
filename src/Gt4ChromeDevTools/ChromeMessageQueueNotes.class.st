@@ -22,6 +22,21 @@ ChromeMessageQueueNotes class >> importDefault: aString [
 	^ uniqueInstance
 ]
 
+{ #category : #'instance creation' }
+ChromeMessageQueueNotes class >> importDefaultFromFileReference: aFileReference [
+
+	uniqueInstance := self importFromFileReference: aFileReference.
+	^ uniqueInstance
+]
+
+{ #category : #'instance creation' }
+ChromeMessageQueueNotes class >> importFromFileReference: aFileReference [
+
+	^ aFileReference
+		  readStreamEncoded: #utf8
+		  do: [ :aStream | STON fromStream: aStream ]
+]
+
 { #category : #adding }
 ChromeMessageQueueNotes >> addNote: aNote [
 
