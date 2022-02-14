@@ -1,6 +1,21 @@
 Extension { #name : #ChromeTabPage }
 
 { #category : #'*Gt4ChromeDevTools' }
+ChromeTabPage >> captureScreenshotBase64 [
+	"Capture a screenshot of the current page at full resolution"
+	| json layout message |
+
+	layout := self getLayoutMetrics.
+	message := ChromePageMessageFactory new 
+		captureScreenshotX: 0 y: 0 
+		width: ((layout at: 'contentSize') at: 'width')
+		height: ((layout at: 'contentSize') at: 'height')
+		scale: 1.0.
+	json := self sendMessage: message.
+	^ (json at: 'result') at: 'data'.
+]
+
+{ #category : #'*Gt4ChromeDevTools' }
 ChromeTabPage >> gtGetMissingChildrenFor: anAction [
 
 	<gtAction>
@@ -55,6 +70,55 @@ ChromeTabPage >> gtMessageQueueFor: aView [
 		  title: 'Message Queue';
 		  priority: 39;
 		  items: [ messageQueue copy ];
+		  actionDropdownButtonIcon: BrGlamorousVectorIcons down
+		  label: 'Note'
+		  tooltip: 'Extract and remove message events with a note'
+		  content: [ :aButton :aTab | 
+			  | anEditor |
+			  BrVerticalPane new
+				  alignCenterLeft;
+				  width: 300;
+				  vFitContent;
+				  padding: (BlInsets all: 10);
+				  addChild: (anEditor := BrEditor new
+						               aptitude: BrGlamorousRegularEditorAptitude;
+						               border:
+							               (BlBorder
+								                paint:
+									                BrGlamorousColors disabledButtonTextColor
+								                width: 1);
+						               margin: (BlInsets bottom: 10);
+						               hMatchParent;
+						               vFitContent);
+				  addChild: (BrToolbar new
+						   fitContent;
+						   aptitude: BrGlamorousToolbarAptitude;
+						   addItem: (BrButton new
+								    aptitude: BrGlamorousButtonWithIconAptitude;
+								    icon: BrGlamorousVectorIcons accept;
+								    label: 'Make a note';
+								    action: [ :anAcceptButton | 
+									    | aCopy aNode aScreenshot |
+									    aCopy := messageQueue copy.
+									    aNode := self getDocument.
+									    self getMissingChildren.
+									    aScreenshot := self captureScreenshotBase64.
+
+									    ChromeMessageQueueNotes default
+										    addTitle: anEditor text asString
+										    node: aNode
+										    messages: aCopy
+										    screenshot: aScreenshot.
+
+									    messageQueue removeAll.
+									    aTab viewContentElement phlow update ]);
+						   addItem: (BrButton new
+								    aptitude: BrGlamorousButtonWithIconAptitude;
+								    icon: BrGlamorousVectorIcons inspect;
+								    label: 'Inspect notes';
+								    action: [ :anInspectButton | 
+									    aButton phlow spawnObject:
+											    ChromeMessageQueueNotes default ])) ];
 		  actionUpdateButton;
 		  actionButtonIcon: BrGlamorousIcons trash
 		  tooltip: 'Clear Message Queue'
@@ -84,7 +148,18 @@ ChromeTabPage >> gtRootNodeFor: aView [
 		  children: #children;
 		  actionUpdateButton;
 		  column: 'Name' text: #gtChildrenViewText;
-		  expandUpTo: 2;
-		  updateWhen: ChromePageDOMDocumentUpdated
-		  in: [ self pageEventListener ] 
+		  expandUpTo: 2
+]
+
+{ #category : #'*Gt4ChromeDevTools' }
+ChromeTabPage >> pageEventListener [
+
+	<return: #ChromePageEventsProcessor>
+	^ messageProcessorMutex critical: [ 
+		  messageProcessors
+			  detect: [ :each | each class = ChromePageEventsProcessor ]
+			  ifFound: [ :aMessageProcessor | aMessageProcessor ]
+			  ifNone: [ 
+				  self addMessageProcessor:
+					  (ChromePageEventsProcessor new page: self) ] ]
 ]
