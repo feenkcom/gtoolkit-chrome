@@ -41,7 +41,7 @@ ChromePageAnnouncement >> message: aMessageDictionary [
 { #category : #accessing }
 ChromePageAnnouncement >> page [
 
-	<return: #ChromePage>
+	<return: #ChromeTabPage>
 	^ page
 ]
 
