@@ -8,7 +8,7 @@ CDTCallFrame >> gtLocalScopeFor: aView [
 	localScope := self localScope.
 	localScope ifNil: [ ^ aView empty ].
 	^ aView columnedList 
-		title: 'Local Scope';
+		title: 'Local scope';
 		priority: 15;
 		items: [ localScope properties ];
 		column: 'Name' text: [ :item | item name ];
@@ -20,7 +20,7 @@ CDTCallFrame >> gtScopeFor: aView [
 	<gtView>
 
 	^ aView list
-		title: 'Scope Chain';
+		title: 'Scope chain';
 		priority: 15;
 		items: [ self scopeChain ];
 		itemText: [ :scope | 

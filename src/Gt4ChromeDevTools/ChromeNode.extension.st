@@ -61,7 +61,7 @@ ChromeNode >> gtRawDictonaryFor: aView context: aContext [
 	aContext at: #gtTreeExpansionLevel put: 1.
 	
 	^ aView forward
-		title: 'RAW Data';
+		title: 'RAW data';
 		priority: 40;
 		object: [ dictionary ];
 		view: #gtTreeFor:context:

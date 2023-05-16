@@ -51,7 +51,7 @@ ChromeTabPage >> gtMessageProcessorsFor: aView [
 	messageProcessors ifNil: [ ^ aView empty ].
 
 	^ aView columnedList
-		  title: 'Message Processors';
+		  title: 'Message processors';
 		  priority: 40;
 		  items: [ 
 			  messageProcessorMutex critical: [ messageProcessors copy ] ];
@@ -67,7 +67,7 @@ ChromeTabPage >> gtMessageQueueFor: aView [
 	messageQueue ifNil: [ ^ aView empty ].
 
 	^ aView columnedList
-		  title: 'Message Queue';
+		  title: 'Message queue';
 		  priority: 39;
 		  items: [ messageQueue copy ];
 		  actionDropdownButtonIcon: BrGlamorousVectorIcons down
@@ -142,7 +142,7 @@ ChromeTabPage >> gtRootNodeFor: aView [
 
 	<gtView>
 	^ aView columnedTree
-		  title: 'Root Node';
+		  title: 'Root node';
 		  priority: 1;
 		  items: [ self rootNode ifNotNil: #asArray ifNil: [ #(  ) ] ];
 		  children: #children;
