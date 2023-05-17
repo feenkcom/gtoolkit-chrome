@@ -5,7 +5,7 @@ CDTDebugger >> gtCallStackFor: aView [
 	<gtView>
 
 	^ aView list
-		title: 'Call Stack';
+		title: 'Call stack';
 		priority: 10;
 		items: [ self callFrames ];
 		updateWhen: CDTDebuggerPaused in: [ self announcer ]

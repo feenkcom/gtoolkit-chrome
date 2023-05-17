@@ -35,7 +35,7 @@ ChromeMessageQueueNote >> gtMessagesFor: aView [
 	self messages ifNil: [ ^ aView empty ].
 
 	^ aView columnedList
-		  title: 'Message Queue';
+		  title: 'Message queue';
 		  priority: 2;
 		  items: [ self messages ];
 		  column: 'Index' text: [ :anItem :anIndex | anIndex ] width: 40;
@@ -47,7 +47,7 @@ ChromeMessageQueueNote >> gtRootNodeFor: aView [
 
 	<gtView>
 	^ aView columnedTree
-		  title: 'Root Node';
+		  title: 'Root node';
 		  priority: 1;
 		  items: [ self node ifNotNil: #asArray ifNil: [ #(  ) ] ];
 		  children: #children;
