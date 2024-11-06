@@ -10,9 +10,9 @@ BaselineOfGt4ChromeDevTools >> baseline: spec [
 	spec for: #'common' do: [
 		spec
 			baseline: 'Chrome' with: [
-				spec repository: 'github://feenkcom/Pharo-Chrome:v0.5.205/repository' ].
+				spec repository: 'github://feenkcom/Pharo-Chrome:v0.5.206/repository' ].
 
 		spec package: 'Gt4ChromeDevTools' with: [
-			spec requires: #('Chrome') ].
+			spec requires: #(#Chrome) ].
 	]
 ]
