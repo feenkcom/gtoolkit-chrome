@@ -78,7 +78,7 @@ ChromeMessageQueueNotes >> gtNotesFor: aView [
 				  label: 'Remove note';
 				  action: [ :theButton | 
 					  self notes remove: anItem ifAbsent: [ "ignore" ].
-					  theButton phlow firstParentWithView phlow update ] ]
+					  theButton phlow firstParentWithViewContent phlow update ] ]
 		  width: 60;
 		  actionUpdateButton;
 		  actionButtonIcon: BrGlamorousIcons trash
