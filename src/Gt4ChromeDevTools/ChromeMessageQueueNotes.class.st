@@ -74,14 +74,14 @@ ChromeMessageQueueNotes >> gtNotesFor: aView [
 				  fitContent;
 				  beTinySize;
 				  aptitude: BrGlamorousButtonWithIconAptitude;
-				  icon: BrGlamorousIcons minimize;
+				  icon: BrGlamorousVectorIcons minimize;
 				  label: 'Remove note';
 				  action: [ :theButton | 
 					  self notes remove: anItem ifAbsent: [ "ignore" ].
 					  theButton phlow firstParentWithViewContent phlow update ] ]
 		  width: 60;
 		  actionUpdateButton;
-		  actionButtonIcon: BrGlamorousIcons trash
+		  actionButtonIcon: BrGlamorousVectorIcons bin
 		  tooltip: 'Clear Message Queue'
 		  action: [ :aButton :aTab | 
 			  self notes removeAll.
@@ -99,7 +99,7 @@ ChromeMessageQueueNotes >> gtStoreScript: aView [
 		  priority: 10;
 		  aptitude: [ BrGlamorousCodeEditorAptitude ];
 		  text: [ STON toStringPretty: self ];
-		  actionButtonIcon: BrGlamorousIcons save
+		  actionButtonIcon: BrGlamorousVectorIcons save
 		  label: 'Save'
 		  tooltip: 'Save to disk'
 		  action: [ :aButton :aTab | 

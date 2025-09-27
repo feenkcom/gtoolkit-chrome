@@ -120,7 +120,7 @@ ChromeTabPage >> gtMessageQueueFor: aView [
 									    aButton phlow spawnObject:
 											    ChromeMessageQueueNotes default ])) ];
 		  actionUpdateButton;
-		  actionButtonIcon: BrGlamorousIcons trash
+		  actionButtonIcon: BrGlamorousVectorIcons bin
 		  tooltip: 'Clear Message Queue'
 		  action: [ :aButton :aTab | 
 			  messageQueue removeAll.
