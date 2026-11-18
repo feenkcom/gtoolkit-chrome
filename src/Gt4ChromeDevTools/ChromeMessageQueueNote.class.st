@@ -44,15 +44,14 @@ ChromeMessageQueueNote >> gtMessagesFor: aView [
 
 { #category : #'gt - extensions' }
 ChromeMessageQueueNote >> gtRootNodeFor: aView [
-
 	<gtView>
 	^ aView columnedTree
-		  title: 'Root node';
-		  priority: 1;
-		  items: [ self node ifNotNil: #asArray ifNil: [ #(  ) ] ];
-		  children: #children;
-		  column: 'Name' text: #gtChildrenViewText;
-		  expandUpTo: 2
+		title: 'Root node';
+		priority: 1;
+		items: [ self node ifNotNil: [ :v | v asArray ] ifNil: [ #() ] ];
+		children: #children;
+		column: 'Name' text: #gtChildrenViewText;
+		expandUpTo: 2
 ]
 
 { #category : #accessing }

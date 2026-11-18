@@ -139,16 +139,15 @@ ChromeTabPage >> gtNodesWithMissingChildren [
 
 { #category : #'*Gt4ChromeDevTools' }
 ChromeTabPage >> gtRootNodeFor: aView [
-
 	<gtView>
 	^ aView columnedTree
-		  title: 'Root node';
-		  priority: 1;
-		  items: [ self rootNode ifNotNil: #asArray ifNil: [ #(  ) ] ];
-		  children: #children;
-		  actionUpdateButton;
-		  column: 'Name' text: #gtChildrenViewText;
-		  expandUpTo: 2
+		title: 'Root node';
+		priority: 1;
+		items: [ self rootNode ifNotNil: [ :v | v asArray ] ifNil: [ #() ] ];
+		children: #children;
+		actionUpdateButton;
+		column: 'Name' text: #gtChildrenViewText;
+		expandUpTo: 2
 ]
 
 { #category : #'*Gt4ChromeDevTools' }
